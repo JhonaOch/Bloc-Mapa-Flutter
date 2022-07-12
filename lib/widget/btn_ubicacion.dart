@@ -1,36 +1,27 @@
 part of 'widgets.dart';
 
-
-
 class BtnUbicacion extends StatelessWidget {
   const BtnUbicacion({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
-      // ignore: deprecated_member_use
-      final mapaBloc = context.bloc<MapaBloc>();
-      // ignore: deprecated_member_use
-      final miUbicacion = context.bloc<MiUbicacionBloc>();
+    final mapaBloc = context.bloc<MapaBloc>();
+    final miUbicacion = context.bloc<MiUbicacionBloc>();
 
-    return  Container(
-      margin: EdgeInsets.only(bottom: 10),
+    return Container(
+      margin:const  EdgeInsets.only(bottom: 10),
       child: CircleAvatar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black12,
         maxRadius: 25,
         child: IconButton(
-          icon: Icon(Icons.my_location),color: Colors.black87,
-          onPressed: (){
-
-            final destino= miUbicacion.state.ubicacion;
-
+          icon: const Icon(Icons.my_location),
+          color:const Color.fromARGB(221, 65, 2, 80),
+          onPressed: () {
+            final destino = miUbicacion.state.ubicacion;
             mapaBloc.moverCamara(destino!);
-
-          },),
-
+          },
+        ),
       ),
     );
-    
   }
 }

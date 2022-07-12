@@ -1,14 +1,9 @@
 part of 'mapa_bloc.dart';
 
 @immutable
-abstract class MapaEvent {
+abstract class MapaEvent {}
 
-}
-
-
-class OnMapaListo extends MapaEvent {
-
-}
+class OnMapaListo extends MapaEvent {}
 
 class OnNuevaUbicacion extends MapaEvent {
   final LatLng ubicacion;
@@ -16,33 +11,22 @@ class OnNuevaUbicacion extends MapaEvent {
   OnNuevaUbicacion(this.ubicacion);
 }
 
+class OnMarcaRecorrido extends MapaEvent {}
 
-class OnMarcaRecorrido extends MapaEvent {
-
-}
-
-class OnSeguirUbicacion extends MapaEvent {
-
-}
+class OnSeguirUbicacion extends MapaEvent {}
 
 class OnMovioMapa extends MapaEvent {
   final LatLng centroMapa;
 
   OnMovioMapa(this.centroMapa);
-
-
 }
-
 
 class OnCrearRutaInicioDestino extends MapaEvent {
-final List<LatLng> rutaCoordenas;
-final double distancia;
-final double duracion;
+  final List<LatLng> rutaCoordenas;
+  final double distancia;
+  final double duracion;
+  final String nombreDestino;
 
-  OnCrearRutaInicioDestino(this.rutaCoordenas, this.distancia, this.duracion);
-
-
-
+  OnCrearRutaInicioDestino(
+      this.rutaCoordenas, this.distancia, this.duracion, this.nombreDestino);
 }
-
-

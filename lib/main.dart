@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() => runApp(const MyApp());
 
-class  MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
@@ -16,17 +16,14 @@ class  MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => MiUbicacionBloc()),
-         BlocProvider(create: (_) => MapaBloc()),
-         BlocProvider(create: (_) => BusquedaBloc()),
-      
+        BlocProvider(create: (_) => MapaBloc()),
+        BlocProvider(create: (_) => BusquedaBloc()),
       ],
       child: MaterialApp(
-        title: 'Material App',
-        debugShowCheckedModeBanner: false,
-        initialRoute: 'loading',
-        routes:appRouter
-      ),
+          title: 'Material App',
+          debugShowCheckedModeBanner: false,
+          initialRoute: 'loading',
+          routes: appRouter),
     );
-     
   }
 }

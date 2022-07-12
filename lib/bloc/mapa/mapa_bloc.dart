@@ -1,10 +1,14 @@
 import 'dart:convert';
 
+// ignore: depend_on_referenced_packages, import_of_legacy_library_into_null_safe
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_avanzado_3mapa/themes/uber_map_theme.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// ignore: depend_on_referenced_packages, unnecessary_import
 import 'package:meta/meta.dart';
+
+import '../../helpers/helpers.dart';
 
 part 'mapa_event.dart';
 part 'mapa_state.dart';
@@ -18,12 +22,12 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
   //Polineas
 
   Polyline _miRuta = const Polyline(
-      polylineId: PolylineId('mi_ruta'), width: 3, color: Colors.transparent);
+      polylineId: PolylineId('mi_ruta'), width: 4, color: Colors.purple);
 
   Polyline _miDestino = const Polyline(
       polylineId: PolylineId('mi_ruta_destino'),
-      width: 3,
-      color: Colors.black);
+      width: 4,
+      color: Colors.purple);
 
   void initMapa(GoogleMapController controller) {
     if (!state.mapaListo) {
@@ -102,9 +106,57 @@ class MapaBloc extends Bloc<MapaEvent, MapaState> {
     final currentPolylines = state.polylines;
     currentPolylines!['mi_ruta_destino'] = _miDestino;
 
-    yield state.copyWiht(polylines: currentPolylines
-        //TODO MArcadoress
+    //Icono InicioDest
 
-        );
+    final iconInicio = await getMarkerInicioIcon(event.duracion.toInt());
+    // final iconFinal =await getMarkerFinalIcon(event.duracion.toInt());
+    final destinoIcon =
+        await getMarkerDestinoIcon(event.nombreDestino, event.distancia);
+
+//Marcadores \\ /
+    final markerInicio = Marker(
+        anchor: const Offset(0.1, 0.95),
+        markerId: const MarkerId('inicio'),
+        position: event.rutaCoordenas[0],
+        icon: iconInicio,
+        infoWindow: InfoWindow(
+          title: 'Mi ubicacion',
+          snippet:
+              'Duracion recorrido: ${(event.duracion / 60).floor()} minutos.',
+          // anchor: Offset(0.5,0),
+          // onTap: (){
+          //   print('Infor Windows tap');
+          // }
+        ));
+
+    double kilometros = event.distancia / 1000;
+    kilometros = (kilometros * 100).floor().toDouble();
+    kilometros = kilometros / 100;
+
+    final markerFinal = Marker(
+        anchor: const Offset(0.1, 0.95),
+        markerId: const MarkerId('final'),
+        position: event.rutaCoordenas[event.rutaCoordenas.length - 1],
+        icon: destinoIcon,
+        infoWindow: InfoWindow(
+          title: 'Destino',
+          snippet: 'Distancia: $kilometros Km.',
+          // anchor: Offset(0.5,0),
+          // onTap: (){
+          //   print('Infor Windows tap');
+          // }
+        ));
+
+    final newMarkers = {...state.markers!};
+
+    newMarkers['inicio'] = markerInicio;
+    newMarkers['final'] = markerFinal;
+
+    Future.delayed(const Duration(milliseconds: 300)).then((value) {
+// _mapController!.showMarkerInfoWindow(MarkerId('inicio'));
+      _mapController!.showMarkerInfoWindow(const MarkerId('final'));
+    });
+
+    yield state.copyWiht(polylines: currentPolylines, markers: newMarkers);
   }
 }

@@ -5,11 +5,7 @@ class BtnSeguirUbicacion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: deprecated_member_use
-   
-    // ignore: deprecated_member_use
-
-    return BlocBuilder<MapaBloc, MapaState>(
+     return BlocBuilder<MapaBloc, MapaState>(
       builder: (context, state)=>_crearBoton(context,state)
     );
   }
@@ -19,13 +15,13 @@ Widget _crearBoton(BuildContext context,MapaState state){
   return Container(
           margin:const EdgeInsets.only(bottom: 10),
           child: CircleAvatar(
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.black12,
             maxRadius: 25,
             child: IconButton(
               icon: Icon(state.seguriUbicacion
                   ? Icons.directions_run
                   : Icons.accessibility_new),
-              color: Colors.black87,
+              color: const Color.fromARGB(221, 65, 2, 80),
               onPressed: () {
                 mapaBloc.add(OnSeguirUbicacion());
               },

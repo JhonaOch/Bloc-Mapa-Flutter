@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -9,8 +8,9 @@ class AccesoGpsPage extends StatefulWidget {
   State<AccesoGpsPage> createState() => _AccesoGpsPageState();
 }
 
-class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserver {
-@override
+class _AccesoGpsPageState extends State<AccesoGpsPage>
+    with WidgetsBindingObserver {
+  @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
@@ -24,19 +24,17 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
-
     if (state == AppLifecycleState.resumed) {
-      if( await Permission.location.isGranted){
+      if (await Permission.location.isGranted) {
         Navigator.pushReplacementNamed(context, 'loading');
       }
     } else if (state == AppLifecycleState.inactive) {
-     // print('inactive');
+      // print('inactive');
     } else if (state == AppLifecycleState.paused) {
-     // print('paused');
+      // print('paused');
     } else if (state == AppLifecycleState.detached) {
-     // print('detached');
+      // print('detached');
     }
-
 
     //print('========$state');
     super.didChangeAppLifecycleState(state);
@@ -48,16 +46,17 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
+          const Center(
             child: Text('Es necesario el GPS para continuar'),
           ),
           MaterialButton(
-              child: Text(
+              // ignore: sort_child_properties_last
+              child: const Text(
                 'Solicitar acceso ',
                 style: TextStyle(color: Colors.white),
               ),
-              color: Color.fromARGB(255, 75, 2, 96),
-              shape: StadiumBorder(),
+              color: const Color.fromARGB(255, 75, 2, 96),
+              shape: const StadiumBorder(),
               elevation: 1,
               onPressed: () async {
                 //TODO VERIFICAR PERMISO
@@ -72,26 +71,21 @@ class _AccesoGpsPageState extends State<AccesoGpsPage> with WidgetsBindingObserv
   }
 
   void accesoGPS(PermissionStatus status) {
-
     switch (status) {
-      
       case PermissionStatus.granted:
         // TODO: OTORGO EL Permission
         Navigator.pushReplacementNamed(context, 'mapa');
 
         break;
 
-         case PermissionStatus.limited:
+      case PermissionStatus.limited:
         // TODO: Handle this case.
         break;
 
       case PermissionStatus.restricted:
       case PermissionStatus.permanentlyDenied:
       case PermissionStatus.denied:
-       openAppSettings();
-        
-     
+        openAppSettings();
     }
-
   }
 }

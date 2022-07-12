@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_avanzado_3mapa/bloc/busqueda/busqueda_bloc.dart';
 import 'package:flutter_avanzado_3mapa/bloc/mi_ubicacion/mi_ubicacion_bloc.dart';
 import 'package:flutter_avanzado_3mapa/services/traffic_service.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_avanzado_3mapa/search/search_destination.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// ignore: import_of_legacy_library_into_null_safe, library_prefixes
 import 'package:polyline/polyline.dart 'as Poly;
 
 import '../bloc/mapa/mapa_bloc.dart';
